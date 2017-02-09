@@ -32,12 +32,25 @@ class courseParser(HTMLParser):
         print("Decl     :", data)
 
 
+class module(object):
+	def __init__(self):
+		self.time = 0
+		self.location = 0
+
+	def toString(self):
+		print(self)
+
+
 def getRequest(url):
 	return requests.get(url)
 
 if __name__ == '__main__':
-	parser = courseParser
+	Module = module()
+	Module.toString()
+
+	#parser = courseParser
 
 	# Get HTML file
-	htmlRequest = getRequest("http://upnet.up.ac.za/tt/hatfield_timetable.html")
-	print(htmlRequest.content)
+	#htmlRequest = getRequest("http://upnet.up.ac.za/tt/hatfield_timetable.html")
+	#parser = courseParser()
+	#parser.feed(htmlRequest.text)
