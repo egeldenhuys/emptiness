@@ -1,5 +1,6 @@
 #!/bin/python
 from html.parser import HTMLParser
+import requests
 
 class courseParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
@@ -13,3 +14,7 @@ class courseParser(HTMLParser):
 
 if __name__ == '__main__':
 	parser = courseParser
+
+	# Get HTML file
+	htmlRequest = requests.get("http://upnet.up.ac.za/tt/hatfield_timetable.html")
+	print(htmlRequest.content)
