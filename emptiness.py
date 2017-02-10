@@ -1,56 +1,26 @@
 #!/bin/python
-from html.parser import HTMLParser
+
+import argparse
+
 import requests
-
-class courseParser(HTMLParser):
-    def handle_starttag(self, tag, attrs):
-        print("Start tag:", tag)
-        for attr in attrs:
-            print("     attr:", attr)
-
-    def handle_endtag(self, tag):
-        print("End tag  :", tag)
-
-    def handle_data(self, data):
-        print("Data     :", data)
-
-    def handle_comment(self, data):
-        print("Comment  :", data)
-
-    def handle_entityref(self, name):
-        c = chr(name2codepoint[name])
-        print("Named ent:", c)
-
-    def handle_charref(self, name):
-        if name.startswith('x'):
-            c = chr(int(name[1:], 16))
-        else:
-            c = chr(int(name))
-        print("Num ent  :", c)
-
-    def handle_decl(self, data):
-        print("Decl     :", data)
-
-
-class module(object):
-	def __init__(self):
-		self.time = 0
-		self.location = 0
-
-	def toString(self):
-		print(self)
-
-
-def getRequest(url):
-	return requests.get(url)
+import timetable
 
 if __name__ == '__main__':
-	Module = module()
-	Module.toString()
+	parser = argparse.ArgumentParser()
 
-	#parser = courseParser
+	parser.add_argument("-d", "--day", default='', help="Day to check the timetable on. eg: Thursday")
+	parser.add_argument("-s", "--start", default='', help="The start time of the block. HH:MM:SS (24h)")
 
-	# Get HTML file
-	#htmlRequest = getRequest("http://upnet.up.ac.za/tt/hatfield_timetable.html")
-	#parser = courseParser()
-	#parser.feed(htmlRequest.text)
+	args = parser.parse_args()
+
+	htmlRequest = requests.get("http://upnet.up.ac.za/tt/hatfield_timetable.html")
+
+	timeTableObject = timetable.parseHTMLFile(htmlRequest.text)
+
+	# Method 1 ; Elimination
+	venueList = timetable.getVenueList(timeTableObject)
+
+	empty = timetable.getFilteredVenues(args.day, args.start, timeTableObject, venueList)
+
+	for el in empty:
+		print(el)
