@@ -14,27 +14,38 @@ class TimetableEntry:
 		self.venue = venue
 
 # Functions
-def getFilteredVenues(day, startTime, timetable, venueList):
+def getFilteredTimetable(day, startTime, timetable, venueList):
 	"""
 	Given some paramaters, a timetable and venueList, return the empty venues
 	"""
 
-	empty = venueList.copy()
-
 	# Discard all that do not match the day
 	for entry in timetable:
+		# Sanity check. TMP
+		# if entry.start == '' or entry.end == '' or entry.day == '':
+		# 	print('ERROR ' + entry.venue)
+
 		if entry.day != day:
 			timetable.remove(entry)
 
 
 	# Discard all that do not match the time range
 	for entry in timetable:
-		start = 5
-		#print(start)
-		#end = exTime.convertTimeStringToMinutes(entry.end[:-3])
+		start = exTime.convertTimeStringToMinutes(entry.start[:-3])
+		end = exTime.convertTimeStringToMinutes(entry.end[:-3])
+		startTimeMins = exTime.convertTimeStringToMinutes(startTime)
 
-		if entry.start != startTime:
+		# If startTime is not in the range [start, end]
+		if not startTimeMins in range(start, end):
+			#print('Dropping: ' + entry.start + ' -> ' + entry.end)
 			timetable.remove(entry)
+
+	newTimetable = timetable.copy()
+	return newTimetable
+
+def getEmptyVenues(timetable, venueList):
+
+	empty = venueList.copy()
 
 	# By now we have a timetable that contains only the venues that are FULL
 	# If the venue is in the timetable, remove it from the final result

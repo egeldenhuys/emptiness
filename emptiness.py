@@ -8,8 +8,8 @@ import timetable
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 
-	parser.add_argument("-d", "--day", default='', help="Day to check the timetable on. eg: Thursday")
-	parser.add_argument("-s", "--start", default='', help="The start time of the block. HH:MM:SS (24h)")
+	parser.add_argument("-d", "--day", default='', required=True, help="Day to check the timetable on. eg: Thursday")
+	parser.add_argument("-t", "--time", default='', required=True, help="The time the block must be empty (HH:MM (24h))")
 
 	args = parser.parse_args()
 
@@ -20,7 +20,12 @@ if __name__ == '__main__':
 	# Method 1 ; Elimination
 	venueList = timetable.getVenueList(timeTableObject)
 
-	empty = timetable.getFilteredVenues(args.day, args.start, timeTableObject, venueList)
+	filteredTimetable = timetable.getFilteredTimetable(args.day, args.time, timeTableObject, venueList)
+
+	#for el in filteredTimetable:
+	#	print(el.venue)
+
+	empty = timetable.getEmptyVenues(filteredTimetable, venueList)
 
 	for el in empty:
 		print(el)
