@@ -23,12 +23,15 @@ def main():
 
     timetable = parseHTMLFile(htmlRequest.text)
 
-    venueList = getVenueList(timetable)
+	# Method 1 ; Elimination
+    #venueList = getVenueList(timetable)
 
-    empty = getEmptyVenues(args.day, args.start, timetable, venueList)
+    #empty = getEmptyVenues(args.day, args.start, timetable, venueList)
 
-    for el in empty:
-        print(el)
+    #for el in empty:
+    #    print(el)
+
+	# Method 2 ; Calculation
 
     '''
     for el in timetable:
@@ -41,7 +44,7 @@ def getEmptyVenues(day, startTime, timetable, venueList):
     """
 
     empty = venueList.copy()
-    
+
     # Discard all that do not match the day
     for entry in timetable:
         if entry.day != day:
@@ -63,16 +66,16 @@ def getEmptyVenues(day, startTime, timetable, venueList):
     return empty
 
 def getVenueList(timetable):
-    """ 
+    """
     Given a timetable (list of TimetableEntry), return a list of venues
     """
 
-    venueList = []
+    py = []
 
     # TODO: Optimise!
     for entry in timetable:
         if not entry.venue in venueList:
-            venueList.append(entry.venue)  
+            venueList.append(entry.venue)
 
     return venueList
 
@@ -84,7 +87,7 @@ def parseLine(text):
     info = []
 
     rawData = text.split('>')
-    
+
     # Validate the data to make sure it is what we are looking for
     if len(rawData) == 15:
         if rawData[0] == '<tr' and rawData[13] == '</tr':
@@ -92,7 +95,7 @@ def parseLine(text):
             # 8 = Time Start
             # 10 = Time End
             # 12 = Venue
-            
+
             # Cleanup the left over tags
             info = [rawData[6].strip('</td'), rawData[8].strip('</td'), rawData[10].strip('</td'), rawData[12].strip('</td')]
 
@@ -116,5 +119,3 @@ def parseHTMLFile(text):
     return timetable
 
 main()
-
-

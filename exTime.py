@@ -27,3 +27,7 @@ def convertMinutesToTimeString( minutes ):
 		s_hours = '0' + s_hours
 
 	return s_hours + ':' + s_minutes
+
+
+if __name__ == '__main__':
+	print(convertMinutesToTimeString(convertTimeStringToMinutes("12:01")))
