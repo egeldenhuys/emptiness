@@ -39,6 +39,7 @@ if __name__ == '__main__':
 	#	print(el.venue)
 
 	empty = timetable.getEmptyVenues(filteredTimetable, venueList)
-
+	empty.sort()
+	
 	for el in empty:
 		print(el)
