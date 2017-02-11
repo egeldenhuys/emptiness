@@ -42,18 +42,18 @@ if __name__ == '__main__':
 		emptyVenuesListList.insert(0, timetable.getEmptyVenues(filteredTimetable, venueList))
 
 	# How we will be doing this is selecting list one as the base list and adding all elements which are not contained in the other lists to the final list.
-	if(lengthOpen == '1'):
+	if lengthOpen == '1' :
 		for venueName in emptyVenuesListList[0]:
-	 		print(venueName)
-	
-	for value in emptyVenuesListList[0]:
-		for i in range(1,int(lengthOpen)):
-			found = False
-			for exValue in emptyVenuesListList[i]:
-				if exValue == value:
-					found = True
-			if found and not(value in emptyVenues):
-				emptyVenues.insert(0,value)
+	 		emptyVenues.insert(0,venueName)
+	else:
+		for value in emptyVenuesListList[0]:
+			for i in range(1,int(lengthOpen)):
+				found = False
+				for exValue in emptyVenuesListList[i]:
+					if exValue == value:
+						found = True
+				if found and not(value in emptyVenues):
+					emptyVenues.insert(0,value)
 
 	emptyVenues.sort()
 	for value in emptyVenues:
