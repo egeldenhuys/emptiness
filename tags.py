@@ -19,19 +19,19 @@ class Tags:
 			# Split the keys and values ; man is this ugly
 			spec_one = line.find('"')
 			if spec_one == -1:
-				return
+				continue
 
 			spec_two = line.find('"',spec_one + 1)
 			if spec_two == -1:
-				return
+				continue
 
 			spec_three = line.find('"',spec_two + 1)
 			if spec_three == -1:
-				return
+				continue
 
 			spec_four = line.find('"',spec_three + 1)
 			if spec_four == -1:
-				return
+				continue
 			key = line[spec_one+1:spec_two]
 			value = line[spec_three+1:spec_four]
 			self.addKeyValue(key,value)
