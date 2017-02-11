@@ -8,6 +8,7 @@ import timetable
 import datetime
 import time
 import exTime # Redundant.
+import exLists
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
@@ -15,13 +16,15 @@ if __name__ == '__main__':
 	parser.add_argument('-d', '--day', default='', required=False, help="Day to check the timetable on. (eg: Thursday)")
 	parser.add_argument('-t', '--time', default='', required=False, help="The time the venue must be empty. (eg: 15:30)")
 	parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=__version__))
-	parser.add_argument('-l', '--length', default='1', help="Duration that the venue should be open in hours from the starting time. (eg: 1)")
+	parser.add_argument('-l', '--length', default='1', help="Duration that the venue should be open in hours from the starting time with a max of 4. (eg: 1)")
 
 	args = parser.parse_args()
 
 	time = args.time
 	day = args.day
 	lengthOpen = args.length
+	if int(lengthOpen) > 4:
+		lengthOpen = str(4)
 
 	if args.time == '':
 		time = datetime.datetime.now().strftime('%H:%M')
@@ -33,28 +36,19 @@ if __name__ == '__main__':
 	htmlRequest = requests.get('http://upnet.up.ac.za/tt/hatfield_timetable.html')
 	timeTableObject = timetable.getTimetableFromHTML(htmlRequest.text)
 	venueList = timetable.getVenueList(timeTableObject)
-	emptyVenuesListList = []
-	emptyVenues = []
+	filteredTimetable = timetable.getFilteredTimetable(day, time, timeTableObject)
+	freeVenues = timetable.getEmptyVenues(filteredTimetable, venueList)
 
-	for i in range(0,int(lengthOpen)):
-		nTime = exTime.convertMinutesToTimeString(exTime.convertTimeStringToMinutes(time) + i*60)
-		filteredTimetable = timetable.getFilteredTimetable(day, nTime, timeTableObject)
-		emptyVenuesListList.insert(0, timetable.getEmptyVenues(filteredTimetable, venueList))
+	if( int(lengthOpen) > 1):
+		emptyVenuesList = []
 
-	# How we will be doing this is selecting list one as the base list and adding all elements which are not contained in the other lists to the final list.
-	if lengthOpen == '1' :
-		for venueName in emptyVenuesListList[0]:
-	 		emptyVenues.insert(0,venueName)
-	else:
-		for value in emptyVenuesListList[0]:
-			for i in range(1,int(lengthOpen)):
-				found = False
-				for exValue in emptyVenuesListList[i]:
-					if exValue == value:
-						found = True
-				if found and not(value in emptyVenues):
-					emptyVenues.insert(0,value)
+		for i in range(0, int(lengthOpen)):
+			nTime = exTime.convertMinutesToTimeString(exTime.convertTimeStringToMinutes(time) + i*60)
+			filteredTimetable = timetable.getFilteredTimetable(day, nTime, timeTableObject)
+			emptyVenuesList.insert(0,timetable.getEmptyVenues(filteredTimetable, venueList))
 
-	emptyVenues.sort()
-	for value in emptyVenues:
-		print(value)
+		freeVenues = exLists.splitList_UniqueRecurring(emptyVenuesList[0],emptyVenuesList[1:])
+
+	freeVenues.sort()
+	for venue in freeVenues:
+		print(venue)
