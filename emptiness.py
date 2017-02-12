@@ -23,8 +23,6 @@ if __name__ == '__main__':
 	time = args.time
 	day = args.day
 	lengthOpen = args.length
-	if int(lengthOpen) > 4:
-		lengthOpen = str(4)
 
 	if args.time == '':
 		time = datetime.datetime.now().strftime('%H:%M')
@@ -35,20 +33,14 @@ if __name__ == '__main__':
 
 	htmlRequest = requests.get('http://upnet.up.ac.za/tt/hatfield_timetable.html')
 	timeTableObject = timetable.getTimetableFromHTML(htmlRequest.text)
-	venueList = timetable.getVenueList(timeTableObject)
-	filteredTimetable = timetable.getFilteredTimetable(day, time, timeTableObject)
-	freeVenues = timetable.getEmptyVenues(filteredTimetable, venueList)
 
-	if( int(lengthOpen) > 1):
-		emptyVenuesList = []
+	validFreeVenues = timetable.getVenueList(timeTableObject)
 
-		for i in range(0, int(lengthOpen)):
-			nTime = exTime.convertMinutesToTimeString(exTime.convertTimeStringToMinutes(time) + i*60)
-			filteredTimetable = timetable.getFilteredTimetable(day, nTime, timeTableObject)
-			emptyVenuesList.insert(0,timetable.getEmptyVenues(filteredTimetable, venueList))
+	for i in range(0, int(lengthOpen) + 1):
+		nTime = exTime.convertMinutesToTimeString(exTime.convertTimeStringToMinutes(time) + i*60)
+		filteredTimetable = timetable.getFilteredTimetable(day, nTime, timeTableObject)
+		validFreeVenues = timetable.getEmptyVenues(filteredTimetable, validFreeVenues)
 
-		freeVenues = exLists.splitList_UniqueRecurring(emptyVenuesList[0],emptyVenuesList[1:])
-
-	freeVenues.sort()
-	for venue in freeVenues:
+	validFreeVenues.sort()
+	for venue in validFreeVenues:
 		print(venue)
