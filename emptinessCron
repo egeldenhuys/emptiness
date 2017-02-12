@@ -1,9 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 # A cron job used to redownload the timetable everyday.
 
 # Change the OUT directory to wherever emptiness is installed;
-# To run create a system link to this script in the appropriate /etc/cron.d/ folder.
-OUT=~/Github/emptiness/test.html
+# To run create a system link to this script in the appropriate /etc/cron.time/ folder.
+# Test with run-parts --test -v /etc/cron.daily
+OUT=/home/connor/Github/emptiness/test.html	# This has to be an ABSOLUTE path.c
 
 curl --url "http://upnet.up.ac.za/tt/hatfield_timetable.html" --output $OUT -f
