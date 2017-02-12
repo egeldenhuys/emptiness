@@ -3,6 +3,7 @@
 Find empty venues on the University of Pretoria campus.
 
 ## Usage
+### CLI
 ```
 usage: emptiness.py [-h] [-d DAY] [-t TIME] [--version]
 
@@ -13,7 +14,7 @@ optional arguments:
   --version             show program's version number and exit
 ```
 
-### Example output
+#### Example output
 ```
 $ python emptiness.py -d Thursday -t 13:30
 
@@ -29,6 +30,13 @@ Ing/Eng III - 6
 Wisk/Maths 2-1
 ```
 
+### Server
+- `./start-server.sh` - Start the server
+- `./stop-server.sh` - Stop the server
+- `./restart-server.sh` - Restart server
+
 ## Requirements
-- Python 3
-- [requests](http://docs.python-requests.org/en/master/user/install/) Python library
+- Python 3 (`pacman -S python`)
+- pip (`pacman -S python-pip`)
+	- [requests](http://docs.python-requests.org/en/master/user/install/) (`pip install requests`)
+	- [Flask](http://flask.pocoo.org/) (`pip install Flask`)

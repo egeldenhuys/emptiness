@@ -1,1 +1,11 @@
 __pycache__
+
+# Log files
+dns.sh
+dns.log
+dns.pid
+
+flask-server.log
+flask-server.pid
+
+*.pyc

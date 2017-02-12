@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emptiness</title>
+</head>
+<body>
+	<p style="font-family:courier, monospace;">
+	branch: server<br>
+	Last database update: {{ lastUpdate }}<br>
+	<br>
+	Generated at {{ fullTime }}<br>
+	Requested by {{ request.remote_addr}}
+	</p>
+
+	<table style="font-family:courier, monospace;">
+		<tr>
+			<th>{{ timeA }}</th>
+			<th>{{ timeB }}</th>
+		</tr>
+
+		{# Logic for creating nice table from two lists #}
+
+		{% for i in range(0, dualColumnList|length, 2) %}
+		<tr>
+			<td>{{ dualColumnList[i] }}</td>
+			<td>{{ dualColumnList[i + 1] }}</td>
+		</tr>
+		{% endfor %}
+
+	</table>
+</body>
+</html>
