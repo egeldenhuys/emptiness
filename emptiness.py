@@ -8,7 +8,6 @@ import timetable
 import datetime
 import time
 import exTime # Redundant.
-import exLists
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
@@ -35,20 +34,13 @@ if __name__ == '__main__':
 
 	htmlRequest = requests.get('http://upnet.up.ac.za/tt/hatfield_timetable.html')
 	timeTableObject = timetable.getTimetableFromHTML(htmlRequest.text)
-	venueList = timetable.getVenueList(timeTableObject)
-	filteredTimetable = timetable.getFilteredTimetable(day, time, timeTableObject)
-	freeVenues = timetable.getEmptyVenues(filteredTimetable, venueList)
 
-	if( int(lengthOpen) > 1):
-		emptyVenuesList = []
+	# venueList = timetable.getVenueList(timeTableObject)
+	# At this point we can start to apply filters to the timeTableObject
 
-		for i in range(0, int(lengthOpen)):
-			nTime = exTime.convertMinutesToTimeString(exTime.convertTimeStringToMinutes(time) + i*60)
-			filteredTimetable = timetable.getFilteredTimetable(day, nTime, timeTableObject)
-			emptyVenuesList.insert(0,timetable.getEmptyVenues(filteredTimetable, venueList))
+	for i in range(0,int(lengthOpen) + 1):
+		timeTableObject = timetable.getFilteredTimetable(day,time,timeTableObject)
 
-		freeVenues = exLists.splitList_UniqueRecurring(emptyVenuesList[0],emptyVenuesList[1:])
 
-	freeVenues.sort()
-	for venue in freeVenues:
-		print(venue)
+	for entry in timeTableObject:
+		print(entry.venue)
