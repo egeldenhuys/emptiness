@@ -34,6 +34,9 @@ def displayVenues():
 	emptyA = timetable.getEmptyVenuesFromFullTimetable(day, timeA, timeTableObject)
 	emptyB = timetable.getEmptyVenuesFromFullTimetable(day, timeB, timeTableObject)
 
+	emptyA.sort()
+	emptyB.sort()
+
 	emptyC = getDualColumnList(emptyA, emptyB)
 
 	return render_template('index.html', dualColumnList=emptyC, timeA=timeA, timeB=timeB, fullTime=fullTime, lastUpdate=lastUpdate), 200
