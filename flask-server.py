@@ -6,6 +6,7 @@ import requests
 import os
 import time
 import sys
+import cgi
 
 from flask import Flask
 from flask import request
@@ -61,6 +62,7 @@ updateTimetableInMemory()
 def displayFlaskLog():
 	f = open('flask-server.log', 'r')
 	data = f.read()
+	data = cgi.escape(data)
 	f.close()
 
 	return '<pre>' + data + '</pre>', 200
@@ -69,6 +71,7 @@ def displayFlaskLog():
 def displayDnsLog():
 	f = open('dns.log', 'r')
 	data = f.read()
+	data = cgi.escape(data)
 	f.close()
 
 	return '<pre>' + data + '</pre>', 200
