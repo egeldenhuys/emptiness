@@ -1,6 +1,6 @@
 #!/bin/python
 
-__version__ = 'v1.0.0'
+__version__ = 'v1.1.0'
 
 import argparse
 import requests
@@ -14,7 +14,7 @@ if __name__ == '__main__':
 	parser.add_argument('-d', '--day', default='', required=False, help="Day to check the timetable on. (eg: Thursday)")
 	parser.add_argument('-t', '--time', default='', required=False, help="The time the venue must be empty. (eg: 15:30)")
 	parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=__version__))
-                    
+
 	args = parser.parse_args()
 
 	time = args.time
@@ -34,9 +34,8 @@ if __name__ == '__main__':
 
 	filteredTimetable = timetable.getFilteredTimetable(day, time, timeTableObject)
 	emptyVenues = timetable.getEmptyVenues(filteredTimetable, venueList)
-	
+
 	emptyVenues.sort()
-	
+
 	for venueName in emptyVenues:
 		print(venueName)
-		

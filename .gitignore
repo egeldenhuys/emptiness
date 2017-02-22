@@ -1,11 +1,9 @@
 __pycache__
 
-# Log files
+# Contains private URL!
 dns.sh
-dns.log
-dns.pid
 
-flask-server.log
-flask-server.pid
-
+# Log files
+*.pid
+*.log
 *.pyc

@@ -18,6 +18,7 @@ app = Flask(__name__)
 
 htmlFile = ''
 lastUpdate = ''
+version = 'v1.1.0'
 
 @app.route('/')
 def displayVenues():
@@ -40,7 +41,7 @@ def displayVenues():
 
 	emptyC = getDualColumnList(emptyA, emptyB)
 
-	return render_template('index.html', dualColumnList=emptyC, timeA=timeA, timeB=timeB, fullTime=fullTime, lastUpdate=lastUpdate), 200
+	return render_template('index.html', version=version, dualColumnList=emptyC, timeA=timeA, timeB=timeB, fullTime=fullTime, lastUpdate=lastUpdate), 200
 
 @app.route('/update')
 def updateTimetableInMemory_trigger():

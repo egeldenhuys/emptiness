@@ -3,7 +3,8 @@
 echo Restarting servers...
 
 echo "---- Stopping ----"
-./stop-server.sh
+./stop-all.sh
+
 echo " "
 echo "---- Starting ----"
-./start-server.sh
+./start-all.sh

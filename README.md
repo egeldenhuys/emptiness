@@ -31,9 +31,9 @@ Wisk/Maths 2-1
 ```
 
 ### Server
-- `./start-server.sh` - Start the server
-- `./stop-server.sh` - Stop the server
-- `./restart-server.sh` - Restart server
+- `./start-allr.sh` - Start all daemons
+- `./stop-all.sh` - Stop all daemons
+- `./restart-all.sh` - Restart all daemons
 
 ## Requirements
 - Python 3 (`pacman -S python`)
