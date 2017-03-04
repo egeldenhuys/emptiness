@@ -61,16 +61,7 @@ updateTimetableInMemory()
 
 @app.route('/flask_log')
 def displayFlaskLog():
-	f = open('flask-server.log', 'r')
-	data = f.read()
-	data = cgi.escape(data)
-	f.close()
-
-	return '<pre>' + data + '</pre>', 200
-
-@app.route('/dns_log')
-def displayDnsLog():
-	f = open('dns.log', 'r')
+	f = open('/mnt/dalla-hdd/dalla/emptiness/flask-server.log', 'r')
 	data = f.read()
 	data = cgi.escape(data)
 	f.close()

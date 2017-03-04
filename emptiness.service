@@ -1,0 +1,15 @@
+[Unit]
+Description=Emptiness Flask Web Server
+
+[Service]
+User=dalla
+Group=dalla
+Type=forking
+ExecStart=/mnt/dalla-hdd/dalla/emptiness/start-all.sh
+ExecStop=/mnt/dalla-hdd/dalla/emptiness/stop-all.sh
+PIDFile=/mnt/dalla-hdd/dalla/emptiness/flask-fixer.pid
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

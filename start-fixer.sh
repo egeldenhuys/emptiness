@@ -1,13 +1,18 @@
 #!/bin/bash
 
+installDir=/mnt/dalla-hdd/dalla/emptiness
+
+logFile=$installDir/flask-fixer.log
+pidFile=$installDir/flask-fixer.pid
+
 # Fixer
-if [ -f fixer.pid ]; then
+if [ -f $pidFile ]; then
 	echo Fixer is already running!
 else
 	echo Starting Fixer daemon...
 
-	./fixer.sh >> fixer.log 2>&1 &
+	$installDir/flask-fixer.sh >> $logFile 2>&1 &
 
-	echo $! > fixer.pid
+	echo $! > $pidFile
 	echo PID = $!
 fi

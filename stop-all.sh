@@ -1,5 +1,5 @@
 #!/bin/bash
+installDir=/mnt/dalla-hdd/dalla/emptiness
 
-./stop-flask.sh
-./stop-ddns.sh
-./stop-fixer.sh
+$installDir/stop-flask.sh
+$installDir/stop-fixer.sh
