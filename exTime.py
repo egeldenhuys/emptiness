@@ -7,7 +7,7 @@ def convertTimeStringToMinutes( timeString ):
 		return -1
 
 	hours = timeString[ : pos ]
-	minutes = timeString[ pos+1 : ]
+	minutes = timeString[ pos+1 : pos + 3]
 
 	return int(hours) * 60 + int(minutes)
 
